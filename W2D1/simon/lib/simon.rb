@@ -3,20 +3,28 @@ class Simon
 
   attr_accessor :sequence_length, :game_over, :seq
 
-  def initialize
-
+  def initialize(sequence_length = 1, game_over = false, seq = [])
+    @sequence_length = sequence_length
+    @game_over = game_over
+    @seq = seq
   end
 
   def play
-
+    take_turn until @game_over == true
+    game_over_message
+    reset_game
   end
 
   def take_turn
-
+    show_sequence
+    require_sequence
+    round_success_message
+    @sequence_length += 1
+@game_over = true
   end
 
   def show_sequence
-
+    add_random_color
   end
 
   def require_sequence
@@ -24,7 +32,7 @@ class Simon
   end
 
   def add_random_color
-
+    @seq << COLORS.sample
   end
 
   def round_success_message
@@ -32,10 +40,12 @@ class Simon
   end
 
   def game_over_message
-
+    puts "--GAME OVER--"
   end
 
   def reset_game
-
+    @sequence_length = 1
+    @game_over = false
+    @seq = []
   end
 end
