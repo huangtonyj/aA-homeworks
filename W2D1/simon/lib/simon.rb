@@ -1,6 +1,6 @@
 class Simon
-  # COLORS = %w(red blue green yellow)
-  COLORS = %w(R B G Y)
+  COLORS = %w(red blue green yellow)
+  # COLORS = %w(R B G Y)
 
   attr_accessor :sequence_length, :game_over, :seq
 
@@ -58,5 +58,7 @@ class Simon
   end
 end
 
-g = Simon.new
-g.play
+if __FILE__ == $PROGRAM_NAME
+  g = Simon.new
+  g.play
+end
