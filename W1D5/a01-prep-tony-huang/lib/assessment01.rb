@@ -4,19 +4,14 @@ class Array
   # Monkey patch the Array class and add a my_inject method. If my_inject receives
   # no argument, then use the first element of the array as the default accumulator.
 
-  def my_inject(accumulator = nil)
-    # debugger
-    # self[0] if accumulator == nil
+  def my_inject(acc = nil)
+    acc ||= self.shift
 
-    arr = accumulator ? self.dup : self[1..-1].dup
-
-    accumulator ||= self[0]
-
-    arr.each do |el|
-      accumulator = proc.call(accumulator, el)
+    self.each do |el|
+      acc = proc.call(acc, el)
     end
 
-    accumulator
+    acc
   end
 end
 
