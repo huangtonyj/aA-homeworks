@@ -1,5 +1,6 @@
 class Simon
-  COLORS = %w(red blue green yellow)
+  # COLORS = %w(red blue green yellow)
+  COLORS = %w(R B G Y)
 
   attr_accessor :sequence_length, :game_over, :seq
 
@@ -20,15 +21,22 @@ class Simon
     require_sequence
     round_success_message
     @sequence_length += 1
-@game_over = true
+# @game_over = true
   end
 
   def show_sequence
     add_random_color
+    @seq.each do |color_i|
+      print "#{color_i} "
+      sleep(0.5)
+    end
+    sleep(1)
+    system("clear")
   end
 
   def require_sequence
-
+    input = gets.chomp.split(" ")
+    @game_over = true if input != @seq
   end
 
   def add_random_color
@@ -36,7 +44,7 @@ class Simon
   end
 
   def round_success_message
-
+    puts "Round successful"
   end
 
   def game_over_message
@@ -49,3 +57,6 @@ class Simon
     @seq = []
   end
 end
+
+g = Simon.new
+g.play
