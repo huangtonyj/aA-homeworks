@@ -82,14 +82,15 @@ class Playwright
   attr_reader :id
 
   def self.all
-    PlayDBConnection.instance.execute("SELECT * FROM playwrights")
+    data = PlayDBConnection.instance.execute("SELECT * FROM playwrights")
     data.map { |datum| Play.new(datum) }
   end
 
   def self.find_by_name(name)
-    PlayDBConnection.instance.execute(<<-SQL, name)
+    person = PlayDBConnection.instance.execute(<<-SQL, name)
       SELECT * FROM playwrights WHERE name = ?
     SQL
+    Playwright.new(person.first)
   end
 
   def initialize(options)
@@ -111,11 +112,11 @@ class Playwright
 
   def update
     raise "#{self} not in database" unless @id
-    PlayDBConnection.instance.execute(<<-SQL, name, birth_year, @id)
+    PlayDBConnection.instance.execute(<<-SQL, @name, @birth_year, @id)
       UPDATE
         playwrights
       SET
-        name = ?
+        name = ?,
         birth_year = ?
       WHERE
         id = ?
@@ -123,11 +124,11 @@ class Playwright
   end
 
   def get_plays
-    PlayDBConnection.instance.execute(<<-SQL)
+    plays = PlayDBConnection.instance.execute(<<-SQL, @id)
       SELECT *
       FROM plays
-      WHERE playwrights_id = @id
+      WHERE playwrights_id = ?
     SQL
-
+    plays.map {|play| Play.new(play)}
   end
 end
