@@ -1,3 +1,5 @@
+require 'byebug'
+
 class SnackBox
   SNACK_BOX_DATA = {
     1 => {
@@ -109,12 +111,46 @@ class MetaCorgiSnacks
     @box_id = box_id
   end
 
-  def method_missing(name, *args)
-    # Your code goes here...
+  # def method_missing(name, *args)
+  #   snacks = ['bone', 'kibble', 'treat']
+  #   snack = name.to_s
+  #   if snacks.include?(snack)
+  #     snack_this(snack)
+  #   else
+  #     #usual missing method error
+  #     raise "no such method bro."
+  #   end
+  # end
+
+  def snack_this(snack_item)
+    snack_info_method = "get_#{snack_item}_info"
+    snack_tastiness_method = "get_#{snack_item}_tastiness"
+
+    info = @snack_box.send(snack_info_method, @box_id)
+    tastiness = @snack_box.send(snack_tastiness_method, @box_id)
+    snack_name = snack_item.capitalize
+    result = "#{snack_name}: #{info}: #{tastiness} "
+    tastiness > 30 ? "* #{result}" : result
   end
 
 
   def self.define_snack(name)
-    # Your code goes here...
+    define_method(name) do
+      snack_this(name)
+    end
+    # snack_this(name)
   end
+end
+
+
+
+if __FILE__ == $PROGRAM_NAME
+  snack_box = SnackBox.new
+  # snacks = CorgiSnacks.new(snack_box, 1)
+  # p snacks.bone
+  # p snacks.kibble
+
+  meta_snacks = MetaCorgiSnacks.new(snack_box, 1)
+  p meta_snacks.bone # => "Bone: Phoenician rawhide: 20 "
+  p meta_snacks.kibble # => "* Kibble: Delicately braised hamhocks: 33"
 end
