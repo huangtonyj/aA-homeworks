@@ -4,16 +4,26 @@ body {
   font-family: sans-serif;
   font-weight: 400, 700;
   font-size: 24px, 16px, 14px;
+
+  background-color: #eee;
 }
 
 .header {
-
+  background-color: #f00;
+  border-bottom: 1px solid #ccc;
+  /* width: 900px; */
+  color: #fff;
 }
 
 .header a {
-
+  /* width: 240px; */
+  display: block;
+  padding: 10px, 20px;
 }
 
 .header-nav {
-
+  width: 900px;
+  /* background-color: green; */
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
 }
