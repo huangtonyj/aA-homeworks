@@ -23,6 +23,7 @@ View.prototype.exercise1 = function () {
   //Result: Every square should turn orange (we already have a CSS rule)
 
   //your code here!
+  $('.square').addClass('orange')
 };
 
 View.prototype.exercise2 = function () {
@@ -30,6 +31,7 @@ View.prototype.exercise2 = function () {
   //Result: Every square vanishes
 
   //your code here!
+  $('.square').remove()
 };
 
 View.prototype.exercise3 = function () {
@@ -37,6 +39,9 @@ View.prototype.exercise3 = function () {
   //Result: An <h1> with the text 'i love jquery' appears under the grid.
 
   //your code here!
+  // const text = 'i love jquery';
+  const h1 = $("<h1>").text("i love jQuery");
+  $('#easel').append(h1);
 };
 
 View.prototype.exercise4 = function () {
@@ -44,6 +49,7 @@ View.prototype.exercise4 = function () {
   //Result: Your name appears in every other square.
 
   //your code here!
+  $('.square:nth-child(even)').text("TJH");
 };
 
 View.prototype.exercise5 = function () {
@@ -55,6 +61,10 @@ View.prototype.exercise5 = function () {
   //  'data-pos' of every square
 
   //your code here!
+
+  $('.square').on("click", (event) => {
+    const currentPos = event.currentTarget.attr("data-pos");
+    alert(currentPos);
 };
 
 View.prototype.exercise6 = function () {
@@ -65,6 +75,12 @@ View.prototype.exercise6 = function () {
   //hint: use window._randomColorString() (defined at top) to get a random color!
 
   //your code here!
+  // $('.square').css("background-color", _randomColorString);
+
+  $('.square').each( (idx, el) => {
+    var $sq = $(el);
+    $sq.css("background-color", _randomColorString());
+  })
 };
 
 View.prototype.exercise7 = function(){
@@ -75,6 +91,16 @@ View.prototype.exercise7 = function(){
   //rainbow.
 
   //your code here!
+  // $('#easel').on("mouseenter" , ".square", (event) => {
+  //   const $sq = $(event.currentTarget);
+  //   console.log($sq.css("background-color"));
+  // });
+
+  $('#easel').on("mouseenter", ".square", e => {
+    const $sq = $(e.currentTarget);
+    // console.log($sq.css("background-color"));
+    alert($sq.css("background-color"));
+  });
 };
 
 
